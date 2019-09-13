@@ -69,7 +69,7 @@ Yanny's Computer 山﨑祐太
 # 1.リモートリポジトリをローカルにclone
 
 ```shell
-git clone -b develop https://github.com/yutayamazaki/Gin-Template.git
+git clone -b develop https://github.com/yutayamazaki/Tutorials.git
 ```
 
 - GitHubなどからリポジトリをローカルに取ってくる
@@ -83,7 +83,7 @@ git clone -b develop https://github.com/yutayamazaki/Gin-Template.git
 # 2. 作業用ブランチを切る
 
 ```shell
-git checkout -b feature/bugfix
+git checkout -b feature/fix_yamazaki
 ```
 
 - `git checkout -b ブランチ名`でブランチを作成する
@@ -103,8 +103,8 @@ git checkout -b feature/bugfix
 # 3. ローカルで作業を行い，変更をcommit
 
 ```shell
-git add main.py
-git commit -m "fix main.py"
+git add yamazaki.md
+git commit -m "add yamazaki.md"
 ```
 
 - `git add file名`でステージングエリアに上げる
@@ -139,7 +139,7 @@ git commit -m "fix main.py"
 # 4. ある程度commitが溜まったらpush
 
 ```shell
-git push origin feature/bugfix
+git push origin feature/fix_yamazaki
 ```
 
 - 自分の作業ブランチをリモートに送る
@@ -149,5 +149,33 @@ git push origin feature/bugfix
 ---
 
 # GitのTips
+
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 100px;
+    }
+</style>
+
+---
+
+# commitのTips
+
+- commitはレビューの際に確認していく単位でもある
+    - 大きすぎても小さすぎても面倒
+    - **困ったときはより小さくまとめる(レビューしやすい)**
+
+- **開発時にどんな変更が加えられたのかをコミットメッセージで確認**していく
+    - メッセージは分かりやすく
+    - commitが**意味のあるまとまり**だと理解しやすくなる！
+
+---
+
+# Pull Request(Merge Request)のTips
+
+- GitHubではPull Request，GitLabではMerge Requestと呼ばれる
+- 作業ブランチを元のブランチに統合する処理のこと
+- Descriptionに何の変更を施したかを書く
+    - 変更された機能だけでなく，その開発の背景や目的などがあるとなお良い
 
 ---
