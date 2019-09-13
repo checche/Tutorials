@@ -3,21 +3,26 @@ $theme: uncover
 template: invert
 -->
 
-![bg](https://github.com/yhatt/marp-cli-example/blob/master/assets/gradient.jpg?raw=true)
-
 # Git / GitHub
 
 Yanny's Computer 山﨑祐太
 
-<style scoped>p { color: #eee; }</style>
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 100px;
+    }
+    p {
+        text-align: center;
+        font-size: 40px;
+    }
+</style>
 
 ---
 <!-- paginate: true -->
 
-![bg](#123)
-![](#fff)
+# 目的
 
-## **目的**
 本チュートリアルでは，以下の点について学んでいきます．
 
 - Git / GitHubとは何か
@@ -26,7 +31,7 @@ Yanny's Computer 山﨑祐太
 
 ---
 
-# **Gitとは**
+# Gitとは
 
 ![bg right 40%](https://git-scm.com/images/logos/downloads/Git-Logo-2Color.png)
 
@@ -37,7 +42,7 @@ Yanny's Computer 山﨑祐太
 
 ---
 
-# **GitHub(GitLab)とは**
+# GitHub(GitLab)とは
 
 - GitHubは**Gitをより便利に利用できるwebサービス**の名前
 - チーム開発やコードの差分チェックなどが便利に！
@@ -47,7 +52,7 @@ Yanny's Computer 山﨑祐太
 
 ---
 
-# **基本的な使い方**
+# 基本的な使い方
 
 1. リモートリポジトリをローカルにclone
 2. 作業用のbranchを切る
@@ -61,7 +66,7 @@ Yanny's Computer 山﨑祐太
 
 ---
 
-# **1.リモートリポジトリをローカルにclone**
+# 1.リモートリポジトリをローカルにclone
 
 ```shell
 git clone -b develop https://github.com/yutayamazaki/Gin-Template.git
@@ -75,7 +80,7 @@ git clone -b develop https://github.com/yutayamazaki/Gin-Template.git
 
 ---
 
-# **2. 作業用ブランチを切る**
+# 2. 作業用ブランチを切る
 
 ```shell
 git checkout -b feature/bugfix
@@ -87,7 +92,7 @@ git checkout -b feature/bugfix
 
 ---
 
-## **branch**
+# branch
 
 - ブランチとは本流のmasterから分岐されたもの
 - 複数のブランチを作成してそれを本流に結合するという流れで開発する
@@ -95,7 +100,7 @@ git checkout -b feature/bugfix
 
 ---
 
-# **3. ローカルで作業を行い，変更をcommit**
+# 3. ローカルで作業を行い，変更をcommit
 
 ```shell
 git add main.py
@@ -107,7 +112,7 @@ git commit -m "fix main.py"
 
 ---
 
-# **commit**
+# commit
 
 - Gitにおけるバージョン管理の単位
 - ひとまとまりの作業を行うたびにcommitを行い，適宜変更を記録していく
@@ -118,7 +123,7 @@ git commit -m "fix main.py"
 
 ---
 
-# **add**
+# add
 
 - Gitでcommit出来るのはステージングエリアにあるファイルだけ
 - ステージングエリアがあることで，commitの単位を調整できる
@@ -131,7 +136,7 @@ git commit -m "fix main.py"
 
 ---
 
-# **4. ある程度commitが溜まったらpush**
+# 4. ある程度commitが溜まったらpush
 
 ```shell
 git push origin feature/bugfix
@@ -143,9 +148,6 @@ git push origin feature/bugfix
 
 ---
 
-![bg](#123)
-![](#fff)
-
-## **GitのTips**
+# GitのTips
 
 ---
