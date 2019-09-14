@@ -23,11 +23,18 @@ Yanny's Computer 山﨑祐太
 
 # 目的
 
-本チュートリアルでは，以下の点について学んでいきます．
+本チュートリアルでは，以下の点について学んでいく
 
 - Git / GitHubとは何か
 - 基本的な使い方
 - チーム開発におけるGitのTips
+
+---
+
+# Reference
+
+- Gitのコマンドと解説一覧(https://git-scm.com/docs)
+- Gitの全容を知る(https://git-scm.com/book/en/v2)
 
 ---
 
@@ -49,6 +56,14 @@ Yanny's Computer 山﨑祐太
 - 同様のwebサービスにGitLabなどもある
 
 ![bg right 40%](https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png)
+
+---
+
+# なぜGitやGitHubを使うか
+
+- **いつ誰が何を変更したか**がすぐに確認できる
+- **過去のある時点にすぐ戻ることができる**
+- 分散型バージョン管理では，**複数人での開発がより便利に**なる
 
 ---
 
@@ -94,7 +109,7 @@ git checkout -b feature/fix_yamazaki
 
 # branch
 
-- ブランチとは本流のmasterから分岐されたもの
+- Gitで管理している履歴を枝分かれさせたもの
 - 複数のブランチを作成してそれを本流に結合するという流れで開発する
 - これにより複数人や複数チームが並行して別機能の開発を行える
 
@@ -179,3 +194,71 @@ git push origin feature/fix_yamazaki
     - 変更された機能だけでなく，その開発の背景や目的などがあるとなお良い
 
 ---
+
+# 頻出Gitコマンド集
+
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 80px;
+    }
+</style>
+
+---
+
+# 確認系のコマンド
+
+#### ・現状確認
+今いるブランチや変更されたファイルがステージングされているかなどを確認．
+
+```shell
+git status
+```
+
+#### ・直近数個のcommitのログを確認
+```shell
+git log
+```
+
+#### ・ステージング前のファイルの変更の差分を確認
+追加した部分が緑，削除した分が赤で表示される．
+```shell
+git diff filename
+```
+
+---
+
+# 作業取り消し系のコマンド
+
+#### ・addの取り消し
+
+
+```shell
+git reset filename
+```
+
+#### ・commitの取り消し
+
+```shell
+git reset HEAD^
+```
+
+---
+
+# Gitの流れを体験する
+
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 80px;
+    }
+</style>
+
+---
+
+# やること
+
+- https://github.com/yutayamazaki/Tutorials.git をforkしてローカルにcloneする
+- 適当なファイルを作ってその変更をcommitする
+- 自分のリモートリポジトリにpush
+- 元のリモートリポジトリにPull Requestを送る
