@@ -176,6 +176,19 @@ git push origin feature/fix_yamazaki
 
 # commitのTips
 
+![ bg right 90%](https://github.com/yutayamazaki/Tutorials/blob/master/git/img/history.png?raw=true)
+
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 100px;
+    }
+</style>
+
+---
+
+# commitのTips
+
 - commitはレビューの際に確認していく単位でもある
     - 大きすぎても小さすぎても面倒
     - **困ったときはより小さくまとめる(レビューしやすい)**
