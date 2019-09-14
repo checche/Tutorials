@@ -28,6 +28,7 @@ Yanny's Computer 山﨑祐太
 - Git / GitHubとは何か
 - 基本的な使い方
 - チーム開発におけるGitのTips
+- Appendix
 
 ---
 
@@ -275,3 +276,145 @@ git reset HEAD^
 - 適当なファイルを作ってその変更をcommitする
 - 自分のリモートリポジトリにpush
 - 元のリモートリポジトリにPull Requestを送る
+
+---
+
+# Appendix
+
+<style scoped="scoped">
+    h1 {
+        text-align: center;
+        font-size: 80px;
+    }
+</style>
+
+---
+
+# Gitのアカウント設定
+
+commitはアカウントに紐づけられているので，ユーザーの設定をする必要がある
+
+- ユーザー名
+- メールアドレス
+
+の2つの情報が必要でこれが設定されていないとcommitが出来ない
+
+---
+
+# 設定の確認
+
+Gitで管理されているディレクトリで以下のコマンドを打つと設定を確認できる．  
+
+```shell
+git config -l
+```
+
+出力結果の例
+```shell
+user.email=tppymd@gmail.com
+user.name=yutayamazaki
+```
+
+---
+
+# globalとlocalの設定
+
+`global`と`local`の2通りの設定がある
+
+- `global`：そのPC全体におけるデフォルトのユーザー設定(`~/.giconfig`)
+- `local`：各ローカルリポジトリにおけるユーザー設定(`.git/config`)
+
+それぞれのファイルの中身は以下のようになっており，これを書き換えることでユーザー設定を変更できる．
+
+```shell
+[user]
+    email = tppymd@gmail.com
+    name = yutayamazaki
+```
+
+---
+
+# configの書き換え
+
+普通にvimなどのエディタで書き換えてもいいが，一応それ専用のコマンドもある
+
+```shell
+$ git config --global user.name "yutayamazaki"
+$ git config --global user.email tppymd@gmail.com
+```
+
+`--global`を`--local`に変えることで，localの設定を変更できる
+
+# GitHubとGitLabの使い分け
+
+- GitHubやGitLabに登録する際にユーザー名とメールアドレスを登録する
+- このユーザー名とメールアドレスを用いて，GitHubとGitLabを同じPCで使い分けることが可能
+
+---
+
+# GitHubやGitLabとの通信
+
+- リモートリポジトリとローカルリポジトリの通信は`HTTPS`か`SSH`で行う
+- GitHubの推奨通信プロトコルは'HTTPS'
+
+
+---
+
+# `HTTP`と`HTTPS`
+
+- `HTTP`と`HTTPS`の違いは，通信が暗号化されているか否か
+- `HTTP`(Hyper Text Transfer Protocol)と`HTTPS`(Hypertext Transfer Protocol Secure)
+- 通信が暗号化されていることで，第三者からは内容を理解できない
+
+# `HTTPS`と`SSH`
+- `SSH`も`HTTPS`と同様にセキュアな通信を行うためのプロトコル
+- `SSH`はSecure Shellの略で，リモートサーバーの操作やファイル転送などを行う
+
+---
+
+# 公開鍵認証
+
+- GitHubの`SSH`のユーザー識別は公開鍵認証という暗号化の方式を用いている
+    1. 「公開鍵」で暗号化し「秘密鍵」で復号する
+    2. 「公開鍵」を通信したい相手に渡して暗号化してもらう
+    3. 自分が所有する「秘密鍵」で復号する
+
+---
+
+# GitHubと`SSH`で通信する
+
+- 公開鍵と秘密鍵の生成
+
+3回エンターを入力すると`id_rsa`と`id_rsa.pub`の2つのファイルが生成される
+
+```shell
+ssh-keygen -t rsa
+```
+
+- `id_rsa`
+    - 秘密鍵で外には出さない
+- `id_rsa.pub`
+    - 公開鍵でこの内容をGitHubに登録する
+
+---
+
+# GitHubと`SSH`で通信する
+
+- https://github.com/settings/keys にアクセスして，`New SSH key`を押す
+- Titleを適当にわかりやすい名前をつける
+- Keyには`id_rsa.pub`の内容をコピペ
+
+![bg right fit](https://github.com/yutayamazaki/Tutorials/blob/master/git/img/ssh_github.png?raw=true)
+
+---
+
+# GitHubと`SSH`で通信する
+
+```shell
+ssh -T git@github.com
+```
+
+で上手く結果が表示されればok
+
+Permittion deniedが出てるとどこかで設定がうまく言ってない
+
