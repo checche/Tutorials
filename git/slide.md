@@ -418,3 +418,18 @@ ssh -T git@github.com
 
 Permittion deniedが出てるとどこかで設定がうまく言ってない
 
+---
+
+# fork元のリポジトリの変更をローカルで追う方法
+
+以下のコマンドで本家のリポジトリを`upstream`という名前でローカルに追加できる
+
+```shell
+git remote add upstream https://github.com/gin-gonic/website.git
+```
+
+例えばfork元のmasterブランチの変更を取得したい場合
+
+```shell
+git pull upstream master
+```
