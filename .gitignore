@@ -1,5 +1,7 @@
 # Custom
 .DS_Store
+image-classification/weights/*
+!image-classification/weights/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
