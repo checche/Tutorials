@@ -14,6 +14,8 @@ BATCH_SIZE = 256
 LR = 0.01
 NUM_EPOCHS = 50
 
+num_classes = len(CLASS_NAMES)
+
 
 def epoch_train(train_loader, model, optimizer, criterion, device=None):
     if device is None:
@@ -96,7 +98,6 @@ if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     criterion = nn.CrossEntropyLoss()
-    num_classes = len(CLASS_NAMES)
     model = AlexNet(num_classes=num_classes)
     optimizer = torch.optim.SGD(model.parameters(), lr=LR, momentum=0.9,
                           weight_decay=5e-4)
