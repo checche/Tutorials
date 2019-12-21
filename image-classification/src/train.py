@@ -3,16 +3,16 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 
-from models import SimpleNet
+from models import AlexNet
 
 CLASS_NAMES = (
     'plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog',
     'horse', 'ship', 'truck'
 )
 
-BATCH_SIZE = 64
-LR = 0.001
-NUM_EPOCHS = 10
+BATCH_SIZE = 256
+LR = 0.01
+NUM_EPOCHS = 50
 
 
 def epoch_train(train_loader, model, optimizer, criterion, device=None):
@@ -20,6 +20,7 @@ def epoch_train(train_loader, model, optimizer, criterion, device=None):
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     model.train()
+    model = model.to(device)
     epoch_loss = 0.
     total = 0
     correct = 0
@@ -45,6 +46,7 @@ def epoch_eval(eval_loader, model, criterion, device=None):
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     model.eval()
+    model = model.to(device)
     epoch_loss = 0.
     total = 0
     correct = 0
@@ -72,6 +74,7 @@ if __name__ == '__main__':
     ])
 
     transform_test = transforms.Compose([
+        transforms.Resize(32),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 
     criterion = nn.CrossEntropyLoss()
     num_classes = len(CLASS_NAMES)
-    model = SimpleNet(num_classes=num_classes)
+    model = AlexNet(num_classes=num_classes)
     optimizer = torch.optim.SGD(model.parameters(), lr=LR, momentum=0.9,
                           weight_decay=5e-4)
 
@@ -107,5 +110,5 @@ if __name__ == '__main__':
         print(f'TRAIN LOSS: {train_loss:.3f}, TRAIN ACC: {train_acc:.3f}')
         print(f'TEST LOSS: {test_loss:.3f}, TEST ACC: {test_acc:.3f}')
 
-        parameters = trainer.model.state_dict()
+        parameters = model.state_dict()
         torch.save(parameters, f'../weights/{epoch}.pth')
