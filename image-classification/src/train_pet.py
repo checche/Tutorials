@@ -1,4 +1,5 @@
 import glob
+import os
 
 from PIL import Image
 from sklearn.model_selection import train_test_split
@@ -6,6 +7,9 @@ import torch
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
+
+from models import AlexNet
+
 
 CLASS_NAMES = ('dog', 'cat')
 
@@ -18,7 +22,7 @@ num_classes = len(CLASS_NAMES)
 
 class PetDataset(torch.utils.data.Dataset):
 
-    def __init__(self, images, labels):
+    def __init__(self, images, labels, transform):
         """
         Args:
             images (list): ex) [dog.jg, cat1.jpg, cat2.jpg, ...]
@@ -26,6 +30,7 @@ class PetDataset(torch.utils.data.Dataset):
         """
         self.images = images
         self.labels = labels
+        self.transform = transform
 
     def __len__(self):
         return len(self.labels)
@@ -33,6 +38,8 @@ class PetDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         path = self.images[idx]
         img = Image.open(path).convert('RGB')
+        img = self.transform(img)
+
         return img, self.labels[idx]
 
 
@@ -112,18 +119,16 @@ if __name__ == '__main__':
         transforms.RandomCrop(32, padding=4),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
 
     transform_valid = transforms.Compose([
         transforms.Resize(32),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
 
     X_train, X_valid, y_train, y_valid = load_datasets('../images')
-    dtrain = PetDataset(X_train, y_train)
-    dvalid = PetDataset(X_valid, y_valid)
+    dtrain = PetDataset(X_train, y_train, transform_train)
+    dvalid = PetDataset(X_valid, y_valid, transform_valid)
 
     train_loader = torch.utils.data.DataLoader(
         dtrain, batch_size=BATCH_SIZE, shuffle=True, drop_last=True
@@ -133,10 +138,10 @@ if __name__ == '__main__':
     )
 
     criterion = nn.CrossEntropyLoss()
-    # model = AlexNet(num_classes=num_classes)
-    model = torchvision.models.alexnet(pretrained=True, num_classes=2)
+    model = AlexNet(num_classes=num_classes)
+    ## model = torchvision.models.alexnet(pretrained=True, num_classes=2)
     optimizer = torch.optim.SGD(model.parameters(), lr=LR, momentum=0.9,
-                                weight_decay=5e-4)
+                          weight_decay=5e-4)
 
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss, train_acc = epoch_train(train_loader, model, optimizer,
