@@ -115,7 +115,7 @@ if __name__ == '__main__':
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
     ])
 
-    transform_test = transforms.Compose([
+    transform_valid = transforms.Compose([
         transforms.Resize(32),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
@@ -136,16 +136,16 @@ if __name__ == '__main__':
     # model = AlexNet(num_classes=num_classes)
     model = torchvision.models.alexnet(pretrained=True, num_classes=2)
     optimizer = torch.optim.SGD(model.parameters(), lr=LR, momentum=0.9,
-                          weight_decay=5e-4)
+                                weight_decay=5e-4)
 
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss, train_acc = epoch_train(train_loader, model, optimizer,
                                             criterion)
-        test_loss, test_acc = epoch_eval(test_loader, model, criterion)
+        valid_loss, valid_acc = epoch_eval(valid_loader, model, criterion)
 
         print(f'EPOCH: [{epoch}/{NUM_EPOCHS}]')
         print(f'TRAIN LOSS: {train_loss:.3f}, TRAIN ACC: {train_acc:.3f}')
-        print(f'TEST LOSS: {test_loss:.3f}, TEST ACC: {test_acc:.3f}')
+        print(f'VALID LOSS: {valid_loss:.3f}, VALID ACC: {valid_acc:.3f}')
 
         parameters = model.state_dict()
         torch.save(parameters, f'../weights/{epoch}.pth')
