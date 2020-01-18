@@ -1,5 +1,7 @@
 import glob
 
+from PIL import Image
+from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
 import torchvision
@@ -7,10 +9,7 @@ import torchvision.transforms as transforms
 
 from models import AlexNet
 
-CLASS_NAMES = (
-    'plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog',
-    'horse', 'ship', 'truck'
-)
+CLASS_NAMES = ('dog', 'cat')
 
 BATCH_SIZE = 256
 LR = 0.01
@@ -22,6 +21,11 @@ num_classes = len(CLASS_NAMES)
 class PetDataset(torch.utils.data.Dataset):
 
     def __init__(self, images, labels):
+        """
+        Args:
+            images (list): ex) [dog.jg, cat1.jpg, cat2.jpg, ...]
+            labels (list): ex) [0, 1, 1, ...]
+        """
         self.images = images
         self.labels = labels
 
@@ -29,16 +33,19 @@ class PetDataset(torch.utils.data.Dataset):
         return len(self.labels)
 
     def __getitem__(self, idx):
-        return self.images[idx], self.labels[idx]
+        path = self.images[idx]
+        img = Image.open(path).convert('RGB')
+        return img, self.labels[idx]
 
 
-def load_datasets(root):
+def load_datasets(root: str):
     images = glob.glob(os.path.join(root, '*.jpg'))
     labels = []
 
     for img in images:
         # 犬は0, 猫は1のラベルをつける
-        if img[0].islower():
+        filename = os.path.basename(img)
+        if filename[0].islower():
             labels.append(0)
         else:
             labels.append(1)
@@ -50,7 +57,6 @@ def load_datasets(root):
         random_state=27
     )
     return X_train, X_valid, y_train, y_valid
-
 
 
 def epoch_train(train_loader, model, optimizer, criterion, device=None):
@@ -131,7 +137,7 @@ if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     criterion = nn.CrossEntropyLoss()
-    model = AlexNet(num_classes=num_classes)
+    # model = AlexNet(num_classes=num_classes)
     model = torchvision.models.alexnet(pretrained=True, num_classes=2)
     optimizer = torch.optim.SGD(model.parameters(), lr=LR, momentum=0.9,
                           weight_decay=5e-4)

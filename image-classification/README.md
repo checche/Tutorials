@@ -240,8 +240,11 @@ class PetDataset(torch.utils.data.Dataset):
 
 ### 自作のデータセットで学習を行う
 
+- まずは[Oxford-IIIT Pet Dataset - University of Oxford](https://www.robots.ox.ac.uk/~vgg/data/pets/)からimages.tar.gzをダウンロードする
+- それを解凍したimagesディレクトリをTutorials/image-classificationディレクトリに置く
 - train_pet.pyの中身で実際に学習を行なっている
 
 ```python
 
 ```
+
