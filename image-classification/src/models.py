@@ -6,6 +6,7 @@ import torch.nn.functional as F
 class AlexNet(nn.Module):
 
     def __init__(self, num_classes, in_channels=3):
+        """ __init__メソッド内でモデルで用いる層を定義する """
         super(AlexNet, self).__init__()
         self.features = nn.Sequential(
             nn.Conv2d(in_channels, 64, kernel_size=3, stride=1),
@@ -34,6 +35,7 @@ class AlexNet(nn.Module):
         )
 
     def forward(self, x):
+        """ forwardメソッドでは__init__で定義した層をどのように伝播させるのかを記述する """
         x = self.features(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
@@ -41,3 +43,9 @@ class AlexNet(nn.Module):
         return x
 
 
+if __name__ == '__main__':
+    model = AlexNet(num_classes=2)
+    inputs = torch.randn(4, 3, 32, 32)
+    outputs = model(inputs)
+    # (batch_size, num_classes)の(4, 2)サイズの出力が出る
+    print(outputs.size())
