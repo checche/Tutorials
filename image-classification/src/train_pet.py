@@ -7,8 +7,6 @@ import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 
-from models import AlexNet
-
 CLASS_NAMES = ('dog', 'cat')
 
 BATCH_SIZE = 256
@@ -133,8 +131,6 @@ if __name__ == '__main__':
     valid_loader = torch.utils.data.DataLoader(
         dvalid, batch_size=BATCH_SIZE
     )
-
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     criterion = nn.CrossEntropyLoss()
     # model = AlexNet(num_classes=num_classes)
