@@ -2,6 +2,8 @@
 .DS_Store
 image-classification/weights/*
 !image-classification/weights/.gitkeep
+.vscode
+images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
